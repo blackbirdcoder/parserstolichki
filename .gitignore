@@ -1,0 +1,7 @@
+__pycache__/
+__pypackages__/
+.idea
+venv/
+output/
+.venv
+.cache
