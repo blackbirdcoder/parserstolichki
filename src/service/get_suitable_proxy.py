@@ -4,6 +4,13 @@ from random import choice
 
 
 def get_suitable_proxy(proxies: list):
+    """Gets a random proxy from the list.
+     Check the proxy for working, if it works, it will return proxy.
+
+    :param proxies: list of received proxies
+    :rtype: dict
+    :return: working proxy
+    """
     proxy_blank = {
         'http': 'http://' + choice(proxies)
     }

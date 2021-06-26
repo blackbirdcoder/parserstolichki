@@ -36,3 +36,6 @@ USER_INTERFACE = {
     'attention_dialog': f'Returning {SERVICE_OPTIONS["number"]} items from the list. This kept parser going',
     'proxy_error': 'Rancid proxy {}'
 }
+
+# for data output
+FOLDER = ['output', 'Moscow', 'db']
