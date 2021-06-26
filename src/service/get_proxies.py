@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import re
 
 
-def get_proxy(user_agent: list, num_proxy: int):
+def get_proxies(user_agent: list, num_proxy: int):
     """Retrieves a list of proxy.
 
     Goes to the resource gets free proxies.

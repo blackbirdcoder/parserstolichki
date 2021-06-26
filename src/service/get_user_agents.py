@@ -5,7 +5,7 @@ import re
 from random import sample
 
 
-def get_user_agent(num_ua: int):
+def get_user_agents(num_ua: int):
     """Retrieves a list of user-agents.
 
     Receives data from a resource, makes a list of them.
