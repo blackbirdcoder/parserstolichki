@@ -38,4 +38,4 @@ USER_INTERFACE = {
 }
 
 # for data output
-FOLDER = ['output', 'Moscow', 'db']
+FOLDERS = ['output', 'Moscow', 'db']
