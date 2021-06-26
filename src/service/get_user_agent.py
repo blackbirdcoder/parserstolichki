@@ -1,6 +1,6 @@
 from src.utils.get_document import get_document
 from bs4 import BeautifulSoup
-from config import MARKUP_ANALYZER, SERVICE_URL, REGEX  # noqa
+from config import MARKUP_ANALYZER, SERVICE_URL, SERVICE_OPTIONS, REGEX, USER_INTERFACE  # noqa
 import re
 from random import sample
 
@@ -24,8 +24,8 @@ def get_user_agent(num_ua: int):
     try:
         return sample(result, num_ua)
     except ValueError as error:
-        print('[Attention] ' + str(error))
-        print('[Attention] Returning five items from the list. This kept parser going')
-        num_ua = 5
+        print(USER_INTERFACE['attention_block'].format('User-Agent') + ' ' + str(error))
+        print(USER_INTERFACE['attention_block'].format('User-Agent') + ' ' + USER_INTERFACE['attention_dialog'])
+        num_ua = SERVICE_OPTIONS['number']
         return sample(result, num_ua)
 

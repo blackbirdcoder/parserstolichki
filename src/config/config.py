@@ -5,7 +5,7 @@ TARGET = {
 }
 
 PAYLOAD = {
-    'city_id': 'cityId=1',
+    'city': 'cityId=1',
     'page': 'page='
 }
 
@@ -18,8 +18,18 @@ SERVICE_URL = {
     'proxy': 'https://free-proxy-list.net/'
 }
 
-# search patterns
-REGEX = {
-    'user-agent': 'Mozilla/'
+SERVICE_OPTIONS = {
+    'number': 5
 }
 
+# search patterns
+REGEX = {
+    'user-agent': 'Mozilla/',
+    'proxy': '[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}:[0-9]{2,5}'
+}
+
+# user notifications
+USER_INTERFACE = {
+    'attention_block': '[Attention {}]',
+    'attention_dialog': f'Returning {SERVICE_OPTIONS["number"]} items from the list. This kept parser going'
+}
