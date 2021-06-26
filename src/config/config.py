@@ -39,3 +39,7 @@ USER_INTERFACE = {
 
 # for data output
 FOLDERS = ['output', 'Moscow', 'db']
+
+# for data db
+DB_NAME = ['different', 'stores']
+
