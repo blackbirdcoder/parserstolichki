@@ -9,6 +9,12 @@ PAYLOAD = {
     'page': 'page='
 }
 
+# for request header
+ACCEPT = {
+    'json': 'application/json',
+    'text': 'text/html'
+}
+
 # parser HTML
 MARKUP_ANALYZER = 'lxml'
 
@@ -43,3 +49,12 @@ FOLDERS = ['output', 'Moscow', 'db']
 # for data db
 DB_NAME = ['different', 'stores']
 
+# ============== sql code
+SQL = {
+    'create_address': """CREATE TABLE IF NOT EXISTS address (
+                        id INTEGER PRIMARY KEY,
+                        stores_id INTEGER,
+                        address TEXT,
+                        telephone TEXT)""",
+    'set_address': """INSERT INTO address VALUES (?, ?, ?, ?)""",
+}

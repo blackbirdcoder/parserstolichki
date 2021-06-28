@@ -9,10 +9,11 @@ def connect_db(func):
     :return: wrapped function
     """
     @wraps(func)
-    def wrapper(directory, db_name, sql):
+    # directory, db_name, sql
+    def wrapper(directory, db_name, sql, *args, **kwargs):
         try:
             with sqlite3.connect(directory + db_name + '.db') as db_connect:
-                func(directory, db_name, sql, db_connect)
+                func(directory, db_name, sql, db_connect, *args, **kwargs)
         except sqlite3.Error as error:
             print(error)
     return wrapper
@@ -32,3 +33,18 @@ def create_table(directory, db_name, sql, db_connect):
     db_cursor.execute(sql)
     db_connect.commit()
 
+
+# ========= set
+@connect_db
+def set_data_table(directory, db_name, sql, db_connect, data):
+    """Adds data to a database table
+    Function must be used with a decorator.
+    :param directory: path where the database is located
+    :param db_name: database where to insert data
+    :param sql:  sql code to write data
+    :param db_connect: database connection object
+    :param data: data to write to the table
+    """
+    db_cursor = db_connect.cursor()
+    db_cursor.executemany(sql, data)
+    db_connect.commit()
