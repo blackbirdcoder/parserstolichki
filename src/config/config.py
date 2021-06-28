@@ -57,4 +57,9 @@ SQL = {
                         address TEXT,
                         telephone TEXT)""",
     'set_address': """INSERT INTO address VALUES (?, ?, ?, ?)""",
+    'create_category': """CREATE TABLE IF NOT EXISTS category (
+                        id INTEGER PRIMARY KEY,
+                        title TEXT,
+                        link TEXT)""",
+    'set_category': """INSERT INTO category VALUES (?, ?, ?)""",
 }
