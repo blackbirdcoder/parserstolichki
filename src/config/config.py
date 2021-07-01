@@ -1,3 +1,12 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+# ============ Proxy data ================
+PROXIES = os.getenv('PROXIES').replace(' ', '').split(',')
+LOGIN = os.getenv('LOGIN')
+PASSWORD = os.getenv('PASSWORD')
+
 # ============ Important data ================
 TARGET = {
     'url': 'https://stolichki.ru/',
@@ -21,26 +30,33 @@ MARKUP_ANALYZER = 'lxml'
 # addresses to receive data for making a request
 SERVICE_URL = {
     'user-agent': 'https://seolik.ru/user-agents-list',
-    'proxy': 'https://free-proxy-list.net/',
     'test': 'https://www.google.com/'
 }
 
 SERVICE_OPTIONS = {
     'number': 5,
-    'timeout': 3
+    'timeout': 3,
+    'multiplication_attempts': 2
 }
 
 # search patterns
 REGEX = {
     'user-agent': 'Mozilla/5.0',
-    'proxy': '[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}:[0-9]{2,5}'
 }
 
 # user notifications
-USER_INTERFACE = {
+USER_NOTIFICATION = {
     'attention_block': '[Attention {}]',
     'attention_dialog': f'Returning {SERVICE_OPTIONS["number"]} items from the list. This kept parser going',
-    'proxy_error': 'Rancid proxy {}'
+    'proxy_error': 'Rancid proxy {} {}',
+    'invalid_proxy': 'Invalid proxy data, check the data, the program cannot run.\n'
+                     'The proxies you provided: {} \n'
+                     'Your login: {} \n'
+                     'Your password: {} \n'
+                     'I can not work with this data check the data',
+    'bad_connect': 'Proxies are probably not valid. The program has stopped. Please check the proxy.\n'
+                   'Connection attempts are: {}'
+
 }
 
 # for data output
@@ -48,6 +64,9 @@ FOLDERS = ['output', 'Moscow', 'db']
 
 # for data db
 DB_NAME = ['different', 'stores']
+
+#  for sleep
+SLEEP_PARAMETERS = ((1, 3), (1, 5))
 
 # ============== sql code
 SQL = {

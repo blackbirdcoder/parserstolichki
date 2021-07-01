@@ -1,6 +1,6 @@
 from random import choice
 from config import ACCEPT, TARGET, PAYLOAD  # noqa
-import service.get_suitable_proxy # noqa
+from service import get_suitable_proxy # noqa
 from . import get_document
 
 
@@ -17,7 +17,7 @@ def get_store_addresses(user_agent: list, proxies: list):
         'user-agent': choice(user_agent),
         'accept': ACCEPT['json']
     }
-    proxy = service.get_suitable_proxy(proxies)
+    proxy = get_suitable_proxy(proxies)
     url = TARGET['url'] + TARGET['folders'][2] + '/' + TARGET['folders'][3]
     document = get_document(url, parameter=PAYLOAD['city'], headers=headers, proxy=proxy)
     stores = document['stores']

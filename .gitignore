@@ -5,3 +5,4 @@ venv/
 output/
 .venv
 .cache
+.env

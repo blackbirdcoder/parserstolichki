@@ -1,30 +1,33 @@
-from random import choice, sample
-from utils import get_document # noqa
-from config import SERVICE_URL, SERVICE_OPTIONS, MARKUP_ANALYZER, REGEX, USER_INTERFACE # noqa
-from bs4 import BeautifulSoup
-import re
+from config import PROXIES, LOGIN, PASSWORD, USER_NOTIFICATION  # noqa
+import sys
 
 
-def get_proxies(user_agent: list, num_proxy: int):
-    """Retrieves a list of proxy.
+class ParserInvalidProxyData(Exception):
+    """Responding to an error with data from the config."""
+    def __init__(self, proxy, login, password):
+        self.proxy = proxy
+        self.login = login
+        self.password = password
 
-    Goes to the resource gets free proxies.
-    Returns a random list with the specified number of proxies.
+    def error_notifi(self):
+        print(USER_NOTIFICATION['invalid_proxy'].format(self.proxy, self.login, self.password))
 
-    :param user_agent: list with user-agents
-    :param num_proxy: how many proxies do you need, quantity
-    :return: proxy list
+
+def get_proxies():
+    """Forms a list of proxies for connection.
+    Data is taken from the config.
+    If the data is not correct, throws an exception and terminates the program.
+    :return: Proxy list for connection
     """
-    pattern = re.compile(REGEX['proxy'])
-    headers = {'user-agent': choice(user_agent)}
-    document = get_document(SERVICE_URL['proxy'], headers=headers)
-    soup = BeautifulSoup(document, MARKUP_ANALYZER)
-    text = soup.get_text()
-    result = pattern.findall(text)
+    proxies = []
     try:
-        return sample(result, num_proxy)
-    except ValueError as error:
-        print(USER_INTERFACE['attention_block'].format('Proxy') + ' ' + str(error))
-        print(USER_INTERFACE['attention_block'].format('Proxy') + ' ' + USER_INTERFACE['attention_dialog'])
-        num_proxy = SERVICE_OPTIONS['number']
-        return sample(result, num_proxy)
+        if not PROXIES or not LOGIN or not PASSWORD:
+            raise ParserInvalidProxyData(PROXIES, LOGIN, PASSWORD)
+        else:
+            for proxy in PROXIES:
+                proxies.append(f'{LOGIN}:{PASSWORD}@{proxy}')
+        return proxies
+    except Exception as error:
+        print(error.error_notifi())
+        sys.exit()
+
