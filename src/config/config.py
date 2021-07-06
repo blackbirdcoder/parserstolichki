@@ -56,7 +56,6 @@ USER_NOTIFICATION = {
                      'I can not work with this data check the data',
     'bad_connect': 'Proxies are probably not valid. The program has stopped. Please check the proxy.\n'
                    'Connection attempts are: {}'
-
 }
 
 # for data output

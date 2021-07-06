@@ -3,6 +3,7 @@ import utils
 import config
 from multiprocessing import Pool
 from random import choice
+import collections
 
 
 def main():
@@ -24,6 +25,7 @@ def main():
     with Pool(amount_elements) as p:
         pre_information = p.starmap(utils.picking_pre_information,
                                     iterable=[*zip(selected_user_agents, selected_proxies, category)])
+    product_links = utils.select_links(pre_information, 'links')
 
 
 if __name__ == '__main__':

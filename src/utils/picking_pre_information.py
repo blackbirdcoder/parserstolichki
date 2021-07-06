@@ -42,8 +42,9 @@ def picking_pre_information(user_agent: str, proxy: str, category: tuple):
     for number in range(blank['num']):
         document = get_document(link, parameter=PAYLOAD['page'] + str(number + 1), headers=headers, proxy=proxy)
         soup = BeautifulSoup(document, MARKUP_ANALYZER)
-        link_product = soup.find_all('a', class_='text-black-class text-success-hover-class')[0]['href']
-        blank['links'] += link_product,
+        link_product = soup.find_all('a', class_='text-black-class text-success-hover-class')
+        for item in link_product:
+            blank['links'] += item['href'],
         del document, soup
     information.append(blank)
     return information[0]
