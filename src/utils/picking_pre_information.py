@@ -5,14 +5,13 @@ from bs4 import BeautifulSoup
 import time
 
 
-def picking_pre_information(user_agent: str, proxy: str, category: tuple):
+def picking_pre_information(data):
     """Collects preliminary information for further successful receipt of goods.
     Finds the maximum number of pages for a category and collects category product links.
-    :param user_agent: user-agent
-    :param proxy: proxy
-    :param category: object where the category links are
+    :param data: contains a user agent, a proxy, and object that contains links to categories
     :return: object with preliminary information, there are links to each product
     """
+    user_agent, proxy, category = data
     # need to sleep
     time.sleep(uniform(*SLEEP_PARAMETERS[0]))
     information = []

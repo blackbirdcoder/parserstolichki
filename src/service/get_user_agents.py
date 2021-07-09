@@ -1,8 +1,9 @@
 from src.utils.get_document import get_document
 from bs4 import BeautifulSoup
-from config import MARKUP_ANALYZER, SERVICE_URL, SERVICE_OPTIONS, REGEX, USER_NOTIFICATION  # noqa
+from config import MARKUP_ANALYZER, SERVICE_URL, SERVICE_OPTIONS, REGEX, USER_NOTIFICATION, PROGRESS_BAR_SETTING  # noqa
 import re
 from random import sample
+from tqdm import tqdm
 
 
 def get_user_agents(num_ua: int):
@@ -16,7 +17,7 @@ def get_user_agents(num_ua: int):
     document = get_document(SERVICE_URL['user-agent'])
     soup = BeautifulSoup(document, MARKUP_ANALYZER)
     cells = soup.find_all('td')
-    for cell in cells:
+    for cell in tqdm(cells, desc='Receiving user-agents', bar_format=PROGRESS_BAR_SETTING):
         if re.match(REGEX['user-agent'], cell.get_text()):
             result.append(''.join(cell.get_text().split('\n')).strip())
     try:

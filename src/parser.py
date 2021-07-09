@@ -3,7 +3,7 @@ import utils
 import config
 from multiprocessing import Pool
 from random import choice
-import collections
+from tqdm import tqdm
 
 
 def main():
@@ -19,13 +19,22 @@ def main():
         utils.db.create_table(DIRECTORY, config.DB_NAME[0], config.SQL['create_category'])
         utils.db.set_data_table(DIRECTORY, config.DB_NAME[0], config.SQL['set_category'], category)
     # The same number of elements is needed for the correct work of multiprocessing queries
-    amount_elements = len(category)
-    selected_user_agents = [choice(USER_AGENTS) for _ in range(amount_elements)]
-    selected_proxies = [service.get_suitable_proxy(PROXIES) for _ in range(amount_elements)]
-    with Pool(amount_elements) as p:
-        pre_information = p.starmap(utils.picking_pre_information,
-                                    iterable=[*zip(selected_user_agents, selected_proxies, category)])
-    product_links = utils.select_links(pre_information, 'links')
+    AMOUNT_ELEMENTS = len(category)
+    selected_user_agents = [choice(USER_AGENTS) for _ in range(AMOUNT_ELEMENTS)]
+    selected_proxies = [service.get_suitable_proxy(PROXIES) for _ in range(AMOUNT_ELEMENTS)]
+    iterable = [*zip(selected_user_agents, selected_proxies, category)]
+    with Pool(AMOUNT_ELEMENTS) as p:
+        pre_information = []
+        for value in tqdm(p.imap_unordered(utils.picking_pre_information, iterable=iterable),
+                          total=AMOUNT_ELEMENTS,
+                          desc='Getting the information you need',
+                          bar_format=config.PROGRESS_BAR_SETTING):
+            pre_information.append(value)
+    if pre_information:
+        product_links = utils.select_links(pre_information, 'links')
+        print(product_links)
+        print(len(product_links))
+    print('work end')
 
 
 if __name__ == '__main__':

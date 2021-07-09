@@ -1,5 +1,6 @@
-from config import PROXIES, LOGIN, PASSWORD, USER_NOTIFICATION  # noqa
+from config import PROXIES, LOGIN, PASSWORD, USER_NOTIFICATION, PROGRESS_BAR_SETTING  # noqa
 import sys
+from tqdm import tqdm
 
 
 class ParserInvalidProxyData(Exception):
@@ -24,7 +25,7 @@ def get_proxies():
         if not PROXIES or not LOGIN or not PASSWORD:
             raise ParserInvalidProxyData(PROXIES, LOGIN, PASSWORD)
         else:
-            for proxy in PROXIES:
+            for proxy in tqdm(PROXIES, desc='Taking a proxy', bar_format=PROGRESS_BAR_SETTING):
                 proxies.append(f'{LOGIN}:{PASSWORD}@{proxy}')
         return proxies
     except Exception as error:

@@ -1,7 +1,8 @@
 from random import choice
-from config import ACCEPT, TARGET, PAYLOAD  # noqa
+from config import ACCEPT, TARGET, PAYLOAD, PROGRESS_BAR_SETTING  # noqa
 from service import get_suitable_proxy # noqa
 from . import get_document
+from tqdm import tqdm
 
 
 def get_store_addresses(user_agent: list, proxies: list):
@@ -21,7 +22,7 @@ def get_store_addresses(user_agent: list, proxies: list):
     url = TARGET['url'] + TARGET['folders'][2] + '/' + TARGET['folders'][3]
     document = get_document(url, parameter=PAYLOAD['city'], headers=headers, proxy=proxy)
     stores = document['stores']
-    for store in stores:
+    for store in tqdm(stores, desc='Retrieving store addresses', bar_format=PROGRESS_BAR_SETTING):
         # Data is created ready prepared for database insertion
         addresses.append((None, store.get('id'), store.get('address'),
                          (store.get('phoneNumber').rstrip('..') if store.get('phoneNumber') != '' else None)))

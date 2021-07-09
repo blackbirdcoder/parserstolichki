@@ -67,6 +67,9 @@ DB_NAME = ['different', 'stores']
 #  for sleep
 SLEEP_PARAMETERS = ((1, 3), (1, 5))
 
+# progress bar settings
+PROGRESS_BAR_SETTING = '{l_bar}{bar:10}{r_bar}{bar:-10b}'
+
 # ============== sql code
 SQL = {
     'create_address': """CREATE TABLE IF NOT EXISTS address (
