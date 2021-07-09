@@ -32,9 +32,7 @@ def main():
             pre_information.append(value)
     if pre_information:
         product_links = utils.select_links(pre_information, 'links')
-        print(product_links)
-        print(len(product_links))
-    print('work end')
+
 
 
 if __name__ == '__main__':
