@@ -2,7 +2,7 @@ def filler(element: list, amount: int):
     """Fast large filling with elements.
     :param element: what to fill
     :param amount: how many
-    :return:
+    :return: filled object
     """
     result = []
     piece = len(element)

@@ -55,7 +55,8 @@ USER_NOTIFICATION = {
                      'Your password: {} \n'
                      'I can not work with this data check the data',
     'bad_connect': 'Proxies are probably not valid. The program has stopped. Please check the proxy.\n'
-                   'Connection attempts are: {}'
+                   'Connection attempts are: {}',
+    'success': 'Data received. See the output folder.'
 }
 
 # for data output
@@ -83,4 +84,22 @@ SQL = {
                         title TEXT,
                         link TEXT)""",
     'set_category': """INSERT INTO category VALUES (?, ?, ?)""",
+    'create_store': """CREATE TABLE IF NOT EXISTS "{}" (
+                id INTEGER PRIMARY KEY,
+                product_code INTEGER,
+                vendor_code INTEGER,
+                product_name TEXT,
+                product_link TEXT,
+                images_link TEXT,
+                online_price REAL,
+                address_store TEXT,
+                store_price REAL)""",
+    'set_store': """INSERT INTO "{}" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 }
+# =========== intro
+INTRO = """
+╔═╗┌─┐┬─┐┌─┐┌─┐┬─┐  ╔═╗┌┬┐┌─┐┬  ┬┌─┐┬ ┬┬┌─┬
+╠═╝├─┤├┬┘└─┐├┤ ├┬┘  ╚═╗ │ │ ││  ││  ├─┤├┴┐│
+╩  ┴ ┴┴└─└─┘└─┘┴└─  ╚═╝ ┴ └─┘┴─┘┴└─┘┴ ┴┴ ┴┴                                                                                                                                      
+"""
+

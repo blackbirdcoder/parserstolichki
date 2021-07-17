@@ -7,6 +7,7 @@ from tqdm import tqdm
 
 
 def main():
+    print(config.INTRO)
     USER_AGENTS = service.get_user_agents(10)
     PROXIES = service.get_proxies()
     DIRECTORY = utils.create_folders()
@@ -42,9 +43,31 @@ def main():
             goods = []
             for result in tqdm(p.imap_unordered(utils.get_collection_goods, iterable=iterable),
                                total=AMOUNT_LINKS,
-                               desc='test goods',
+                               desc='Receiving goods',
                                bar_format=config.PROGRESS_BAR_SETTING):
-                pass
+                goods.append(result[0])
+    if goods:
+        AMOUNT_GOODS = len(goods)
+        with Pool(AMOUNT_GOODS // 1000) as p:
+            stores_id = ()
+            for result in tqdm(p.imap_unordered(utils.select_store_id, iterable=goods),
+                               total=AMOUNT_GOODS,
+                               desc='Retrieving store ID',
+                               bar_format=config.PROGRESS_BAR_SETTING):
+                if result:
+                    # additional sorting exclude repetitions
+                    for current_value in result:
+                        if current_value not in stores_id:
+                            stores_id += current_value,
+        for identifier in tqdm(stores_id, desc='Create store tables in the database',
+                               bar_format=config.PROGRESS_BAR_SETTING):
+            utils.db.create_table(DIRECTORY, config.DB_NAME[1], config.SQL['create_store'].format(identifier))
+        collection_goods = utils.preparation_goods_rec(goods)
+        for item in tqdm(collection_goods, desc='Writing products to the database table',
+                         bar_format=config.PROGRESS_BAR_SETTING):
+            identifier_store, value = list(item.items())[0]
+            utils.set_data_table(DIRECTORY, config.DB_NAME[1], config.SQL['set_store'].format(identifier_store), value)
+        print(config.USER_NOTIFICATION['success'])
 
 
 if __name__ == '__main__':
