@@ -1,6 +1,6 @@
 from random import choice
 from config import ACCEPT, TARGET, PAYLOAD, PROGRESS_BAR_SETTING  # noqa
-from service import get_suitable_proxy # noqa
+from service.get_suitable_proxy import get_suitable_proxy  # noqa
 from . import get_document
 from tqdm import tqdm
 

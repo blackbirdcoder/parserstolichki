@@ -1,4 +1,4 @@
-from src.utils.get_document import get_document
+from utils import get_document  # noqa
 from bs4 import BeautifulSoup
 from config import MARKUP_ANALYZER, SERVICE_URL, SERVICE_OPTIONS, REGEX, USER_NOTIFICATION, PROGRESS_BAR_SETTING  # noqa
 import re
